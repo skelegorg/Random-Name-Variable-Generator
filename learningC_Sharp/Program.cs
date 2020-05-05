@@ -7,17 +7,13 @@ namespace learningC_Sharp
     {
         static void Main(string[] args)
         {
-            //creates a new expandable list for string names
-            List<string> nameList = new List<string>();
             //instantiating the generator object
             saveVars save = new saveVars();
-            save.getInputSave();
-            
+            save.getSaveVariable();
         }
     }
     class randomNameGen
     {
-        
         public int RandomNumber(int min, int max)
         {
             Random random = new Random();
@@ -36,71 +32,84 @@ namespace learningC_Sharp
     }
     class saveVars
     {
-        Dictionary<string, int> intDict = new Dictionary<string, int>();
-        Dictionary<string, bool> boolDict = new Dictionary<string, bool>();
-        Dictionary<string, string> stringDict = new Dictionary<string, string>();
-        Dictionary<string, double> doubleDict = new Dictionary<string, double>();
+        //creates a new expandable list for string names
+        public List<string> nameList = new List<string>();
+        public Dictionary<string, int> intDict = new Dictionary<string, int>();
+        public Dictionary<string, bool> boolDict = new Dictionary<string, bool>();
+        public Dictionary<string, string> stringDict = new Dictionary<string, string>();
+        public Dictionary<string, double> doubleDict = new Dictionary<string, double>();
 
-        public void saveInt(string name, int inputValue)
+        public void getSaveVariable()
         {
-            intDict.Add(name, inputValue);
+            getInputSave();
         }
-        public void saveBool(string name, bool inputValue)
+        private void getInputSave()
         {
-            boolDict.Add(name, inputValue);
-        }
-        public void saveString(string name, string inputValue)
-        {
-            stringDict.Add(name, inputValue);
-        }
-        public void saveDouble(string name, double inputValue)
-        {
-            doubleDict.Add(name, inputValue);
-        }
-        public void getInputSave()
-        {
-            randomNameGen generator = new randomNameGen();
-            bool loopChecker = true;
-            while (loopChecker == true)
+            while (true)
             {
                 Console.WriteLine("What data type is the variable?");
-                string userTypeInput = Console.ReadLine();
-                switch (userTypeInput)
-                {
-                    case "int":
-                        Console.WriteLine("What is the value of the variable?");
-                        string userValueInput = Console.ReadLine();
-                        string intName = generator.generateString(6);
-                        saveInt(intName, Convert.ToInt32(userValueInput));
-                        Console.WriteLine("Your new integer is called " + intName + " and is equal to " + userValueInput);
-                        intName = "";
-                        break;
-                    case "boolean":
-                        Console.WriteLine("What is the value of the variable?");
-                        string userValueInputB = Console.ReadLine();
-                        string boolName = generator.generateString(6);
-                        saveBool(boolName, Convert.ToBoolean(userValueInputB));
-                        Console.WriteLine("Your new boolean is called " + boolName + " and is " + userValueInputB);
-                        boolName = "";
-                        break;
-                    case "double":
-                        Console.WriteLine("What is the value of the variable?");
-                        string userValueInputF = Console.ReadLine();
-                        string floatName = generator.generateString(6);
-                        saveDouble(floatName, Convert.ToDouble(userValueInputF));
-                        Console.WriteLine("Your new double is called " + floatName + " and is equal to " + userValueInputF);
-                        floatName = "";
-                        break;
-                    case "string":
-                        Console.WriteLine("What is the value of the variable?");
-                        string userValueInputS = Console.ReadLine();
-                        string stringName = generator.generateString(6);
-                        saveString(stringName, userValueInputS);
-                        Console.WriteLine("Your new string is called " + stringName + " and is equal to " + userValueInputS);
-                        stringName = "";
-                        break;
-                }
+                saveVarsInList(Console.ReadLine());
+
             }
+        }
+        private void saveVarsInList (string type)
+        {
+            randomNameGen generator = new randomNameGen();
+            int saveInList = 0;
+            if (type == "int")
+            {
+                Console.WriteLine("What is the value of the variable?");
+                string userValueInput = Console.ReadLine();
+                string intName = generator.generateString(6);
+                overloadSave(intName, Convert.ToInt32(userValueInput));
+                Console.WriteLine("Your new integer is called " + intName + " and is equal to " + userValueInput);
+                nameList.Add(intName);
+                intName = "";
+            } else if (type == "boolean")
+            {
+                Console.WriteLine("What is the value of the variable?");
+                string userValueInputB = Console.ReadLine();
+                string boolName = generator.generateString(6);
+                overloadSave(boolName, Convert.ToBoolean(userValueInputB));
+                Console.WriteLine("Your new boolean is called " + boolName + " and is " + userValueInputB);
+                boolName = "";
+            } else if (type == "float")
+            {
+                Console.WriteLine("What is the value of the variable?");
+                string userValueInputF = Console.ReadLine();
+                string floatName = generator.generateString(6);
+                overloadSave(floatName, Convert.ToDouble(userValueInputF));
+                Console.WriteLine("Your new double is called " + floatName + " and is equal to " + userValueInputF);
+                floatName = "";
+            } else if (type == "string")
+            {
+                Console.WriteLine("What is the value of the variable?");
+                string userValueInputS = Console.ReadLine();
+                string stringName = generator.generateString(6);
+                overloadSave(stringName, userValueInputS);
+                Console.WriteLine("Your new string is called " + stringName + " and is equal to " + userValueInputS);
+                stringName = "";
+            } else
+            {
+                Console.WriteLine("Please enter an accepted variable assigner: int, boolean, float, or string");
+            }
+            saveInList++;
+        }
+        private void overloadSave (string name, int input)
+        {
+            intDict.Add(name, input);
+        }
+        private void overloadSave (string name, string input)
+        {
+            stringDict.Add(name, input);
+        }
+        private void overloadSave (string name, double input)
+        {
+            doubleDict.Add(name, input);
+        }
+        private void overloadSave (string name, bool input)
+        {
+            boolDict.Add(name, input);
         }
     }
 }
