@@ -137,7 +137,7 @@ namespace learningC_Sharp
                 Console.WriteLine("What is the value of the variable?");
                 string userValueInputS = Console.ReadLine();
                 string stringName = generator.generateString(6);
-                overloadSave(stringName, userValueInputS);
+                overloadSave(stringName, Convert.ToString(userValueInputS));
                 Console.WriteLine("Your new string is called " + stringName + " and is equal to " + userValueInputS + " and is access number " + saveInList + " in the name list.");
                 nameDict.Add(Convert.ToString(saveInList), stringName);
                 stringName = "";
